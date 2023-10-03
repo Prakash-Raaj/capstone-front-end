@@ -1,6 +1,18 @@
 import { useState } from 'react';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from 'react-router-dom';
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from 'react-router-dom';
 import axios from 'axios';
+import Products from './pages/Products';
+import Login from './pages/Login';
 
 function App() {
   const [textValue, setTextValue] = useState('');
@@ -12,35 +24,19 @@ function App() {
     });
     console.log(response);
   }
-  return (
-    <div className="h-full w-full">
-      <div className="font-bold flex flex-col justify-center items-center">
-        <h1>Welcome to Traditional Threadz</h1>
-        <label
-          // for="first_name"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Enter anything
-        </label>
-        <input
-          type="text"
-          id="first_name"
-          className=" w-64 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="John"
-          value={textValue}
-          onChange={(e) => {
-            setTextValue(e.currentTarget.value);
-          }}
-        />
+  const MainRoute: React.FunctionComponent = () => (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Products />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
+  );
 
-        <button
-          onClick={sampleFunction}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Button
-        </button>
-      </div>
-    </div>
+  return (
+    <>
+      <MainRoute />
+    </>
   );
 }
 

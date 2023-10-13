@@ -1,42 +1,89 @@
-import { useState } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
 } from 'react-router-dom';
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from 'react-router-dom';
-import axios from 'axios';
-import Products from './pages/Products';
-import Login from './pages/Login';
+import { useCookies } from 'react-cookie';
+import AppContainer from './pages/AppContainer';
+import Login from './pages/Account/Login';
+import Register from './pages/Account/Register';
+import NavBar from './Components/NavBar';
+import Home from './pages/Home';
+import { useEffect, useState } from 'react';
+import CategoryCard from './Components/CategoryCard';
 
 function App() {
-  const [textValue, setTextValue] = useState('');
-
-  async function sampleFunction() {
-    console.log(textValue);
-    const response = await axios.post('http://localhost:8080/db', {
-      textValue,
-    });
-    console.log(response);
-  }
-  const MainRoute: React.FunctionComponent = () => (
-    <Router>
+  const SignInRoute: React.FunctionComponent = () => {
+    return (
       <Routes>
-        <Route path="/" element={<Products />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <AppContainer>
+              <Login />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <AppContainer>
+              <Register />
+            </AppContainer>
+          }
+        />
       </Routes>
-    </Router>
-  );
+    );
+  };
+  const MainRoute: React.FunctionComponent = () => {
+    return (
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <AppContainer>
+              <Home />
+            </AppContainer>
+          }
+        />
+        <Route
+        path="/login"
+        element={
+          <AppContainer>
+            <Login/>
+          </AppContainer>
+        }
+
+        />
+      </Routes>
+    );
+  };
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [cookies] = useCookies();
+
+  useEffect(() => {
+    UserAuth();
+  }, []);
+  const UserAuth = () => {
+    if (cookies.token) {
+      setIsSignedIn(true);
+    }
+  };
 
   return (
-    <>
-      <MainRoute />
-    </>
+    <div className="h-full w-full">
+      {/* Welcome to Hank's House */}
+      {/* if it is not signed in */}
+      {/* <SignInRoute /> */}
+      {/* if the user is signed in */}
+      {/* <MainRoute/> */}
+      <AppContainer>
+        {/* {!isSignedIn ? <SignInRoute /> : <MainRoute />} */}
+        <MainRoute />
+        {/* <CategoryCard/> */}
+      </AppContainer>
+    </div>
   );
 }
 

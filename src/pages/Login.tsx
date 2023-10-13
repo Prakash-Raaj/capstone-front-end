@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import InputTextBox from '../components/InputTextBox';
-import PasswordTextBox from '../components/PasswordTextBox';
+import InputTextBox from '../Components/InputTextBox';
+import PasswordTextBox from '../Components/PasswordTextBox';
 
 const Login = () => {
   const [email, setEmail] = useState<string>('');

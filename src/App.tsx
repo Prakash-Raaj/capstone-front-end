@@ -10,6 +10,7 @@ import Login from './pages/Account/Login';
 import Register from './pages/Account/Register';
 import NavBar from './Components/NavBar';
 import Home from './pages/Home';
+import Product from './pages/Product';
 import { useEffect, useState } from 'react';
 import CategoryCard from './Components/CategoryCard';
 
@@ -52,6 +53,15 @@ function App() {
         element={
           <AppContainer>
             <Login/>
+          </AppContainer>
+        }
+
+        />
+         <Route
+        path="/product"
+        element={
+          <AppContainer>
+            <Product/>
           </AppContainer>
         }
 

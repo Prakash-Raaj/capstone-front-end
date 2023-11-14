@@ -1,14 +1,30 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <footer className="bg-gray-800 text-white p-4">
       <div className="flex justify-between">
         <div className="footer-section">
           <h4 className="text-lg font-bold mb-2">Account</h4>
           <ul className="list-none p-0">
-            <li>Log in</li>
-            <li>Sign up</li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              Log in
+            </li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                navigate('/register');
+              }}
+            >
+              Sign up
+            </li>
             <li>Redeem a Gift Card</li>
           </ul>
         </div>

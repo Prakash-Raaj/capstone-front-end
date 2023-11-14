@@ -22,17 +22,13 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
         <p className="text-gray-900 text-xl mt-2">${item.price}</p>
       </div>
       <div className="flex justify-between mt-4">
-          <button
-            className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Add to Cart
-          </button>
-          <button
-            className="bg-green-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Remove
-          </button>
-          </div>
+        <button className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Add to Cart
+        </button>
+        <button className="bg-green-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          Remove
+        </button>
+      </div>
     </div>
   );
 };

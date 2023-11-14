@@ -1,29 +1,37 @@
-import React from 'react';
-import categoryimg from '../assets/images/category-men.png';
-import { FaChevronRight } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BsHeart } from 'react-icons/bs';
 
 export interface ProductCardProps {
-    ProductName: string;
-    ProductImg: string;
-    ProductPrice: number;
+  productTitle: string;
+  productDesc: string;
+  productImg: string;
+  productPrice: number;
 }
 
 const ProductCard = (props: ProductCardProps) => {
+  const [wishlisted, setWishlisted] = useState();
   return (
-    <div className="w-72 h-fit mt-10  px-1 rounded-lg bg-[#f4f6f4] flex flex-col items-center gap-2 cursor-pointer">
-      {/* <p className="text-white">{props.ProductName}</p> */}
+    <div className="w-80 h-[580px] mt-10  p-3 rounded-lg bg-[#f4f6f4] flex flex-col items-center gap-2 cursor-pointer">
       <img
-        src={props.ProductImg}
+        src={props.productImg}
         alt="product"
-        className="object-cover w-11/12 h-[200px] rounded-lg mt-4"
+        className="h-[420px] object-cover"
       />
-      <div className="mt-4 flex items-center gap-2">
-        {props.ProductName}<span className="px:5px;"></span>{props.ProductPrice}$
+      <div className="w-[100%]">
+        <p className="text-lg">{props.productTitle}</p>
+        <p className="italic text-sm text-slate-600">
+          {props.productDesc}
+        </p>
+        <p>${props.productPrice}</p>
+        <div className="flex align-middle justify-between">
+          <button onClick={() => {}}>
+            <BsHeart />
+          </button>
+          <button className="bg-[#228706] p-2 rounded-md text-white">
+            Add to Cart
+          </button>
+        </div>
       </div>
-      <button className="bg-[#FFFFFF] mb-2 text-black font-bold rounded-full w-40">
-        Buy Now
-      </button>
     </div>
   );
 };

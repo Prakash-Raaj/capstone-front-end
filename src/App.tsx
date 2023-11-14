@@ -10,10 +10,13 @@ import Login from './pages/Account/Login';
 import Register from './pages/Account/Register';
 import NavBar from './Components/NavBar';
 import Home from './pages/Home';
-import Product from './pages/Product';
-import Wishlist from './pages/Wishlist';
 import { useEffect, useState } from 'react';
 import CategoryCard from './Components/CategoryCard';
+import WishList from './pages/WishList';
+import Cart from './pages/Cart';
+import ProductCard from './Components/ProductCard';
+import Products from './pages/Products/Products';
+import Footer from './Components/Footer';
 
 function App() {
   const SignInRoute: React.FunctionComponent = () => {
@@ -50,31 +53,52 @@ function App() {
           }
         />
         <Route
-        path="/login"
-        element={
-          <AppContainer>
-            <Login/>
-          </AppContainer>
-        }
-
-        />
-         <Route
-        path="/product"
-        element={
-          <AppContainer>
-            <Product/>
-          </AppContainer>
-        }
-        
+          path="/login"
+          element={
+            <AppContainer>
+              <Login />
+            </AppContainer>
+          }
         />
         <Route
-        path="/wishlist"
-        element={
-          <AppContainer>
-            <Wishlist/>
-          </AppContainer>
-        }
-        
+          path="/register"
+          element={
+            <AppContainer>
+              <Register />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <AppContainer>
+              <WishList />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <AppContainer>
+              <Products />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/products/:id"
+          element={
+            <AppContainer>
+              <Products />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <AppContainer>
+              <Cart />
+            </AppContainer>
+          }
         />
       </Routes>
     );
@@ -92,17 +116,24 @@ function App() {
   };
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full relative">
       {/* Welcome to Hank's House */}
       {/* if it is not signed in */}
       {/* <SignInRoute /> */}
       {/* if the user is signed in */}
       {/* <MainRoute/> */}
-      <AppContainer>
-        {/* {!isSignedIn ? <SignInRoute /> : <MainRoute />} */}
-        <MainRoute />
-        {/* <CategoryCard/> */}
-      </AppContainer>
+      <div className="fixed top-0 left-0 right-0">
+        <NavBar />
+      </div>
+      <div style={{ paddingTop: '70px' }}>
+        <AppContainer>
+          {/* {!isSignedIn ? <SignInRoute /> : <MainRoute />} */}
+          <MainRoute />
+        </AppContainer>
+      </div>
+      <div className="pt-9 bottom-0 left-0 right-0">
+        <Footer />
+      </div>
     </div>
   );
 }

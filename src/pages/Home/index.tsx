@@ -1,5 +1,7 @@
 import React from 'react';
 import NavBar from '../../Components/NavBar';
+import Footer from '../../Components/Footer';
+import ReviewSection from '../../Components/ReviewSection';
 import heroPoster from '../../assets/images/hero-img2.png';
 import categoryMen from '../../assets/images/category-men.png'
 import categoryWomen from '../../assets/images/category-women.png'
@@ -39,6 +41,8 @@ const Home = () => {
           />
         </div>
       </section>
+      <ReviewSection />
+      <Footer />
     </div>
   );
 };

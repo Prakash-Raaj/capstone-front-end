@@ -11,6 +11,7 @@ import Register from './pages/Account/Register';
 import NavBar from './Components/NavBar';
 import Home from './pages/Home';
 import Product from './pages/Product';
+import Wishlist from './pages/Wishlist';
 import { useEffect, useState } from 'react';
 import CategoryCard from './Components/CategoryCard';
 
@@ -64,7 +65,16 @@ function App() {
             <Product/>
           </AppContainer>
         }
-
+        
+        />
+        <Route
+        path="/wishlist"
+        element={
+          <AppContainer>
+            <Wishlist/>
+          </AppContainer>
+        }
+        
         />
       </Routes>
     );

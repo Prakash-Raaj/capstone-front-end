@@ -14,7 +14,7 @@ interface WishlistCardProps {
 
 const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
       <img className="w-full" src={item.image} alt={item.name} />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{item.name}</div>

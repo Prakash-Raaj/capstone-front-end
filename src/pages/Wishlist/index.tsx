@@ -1,28 +1,31 @@
 import React from 'react';
 import WishlistCard from '../../Components/WishlistCard';
+import Mundu from '../../assets/images/products/Mundu.jpeg';
+import Saree from '../../assets/images/products/Saree.jpeg';
+import Sherwani from '../../assets/images/products/Sherwani.jpeg';
 
 const WishList = () => {
   const wishlistItems = [
     {
       id: 1,
-      name: 'Product 1',
+      name: 'Mundu',
       description: 'Lorem ipsum dolor sit amet.',
       price: 19.99,
-      image: 'product1.jpg',
+      image: Mundu,
     },
     {
       id: 2,
-      name: 'Product 2',
+      name: 'Saree',
       description: 'Consectetur adipiscing elit.',
       price: 29.99,
-      image: 'product2.jpg',
+      image: Saree,
     },
     {
       id: 3,
-      name: 'Product 3',
-      description: 'Sed do eiusmod tempor incididunt.',
+      name: 'Sherwani',
+      description: 'Sed do eiusmod tempor.',
       price: 39.99,
-      image: 'product3.jpg',
+      image: Sherwani,
     },
   ];
   return (

@@ -12,7 +12,7 @@ import NavBar from './Components/NavBar';
 import Home from './pages/Home';
 import { useEffect, useState } from 'react';
 import CategoryCard from './Components/CategoryCard';
-import WishList from './pages/WishList';
+import WishList from './pages/Wishlist';
 import Cart from './pages/Cart';
 import ProductCard from './Components/ProductCard';
 import Products from './pages/Products/Products';

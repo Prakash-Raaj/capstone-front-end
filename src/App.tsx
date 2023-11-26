@@ -17,6 +17,8 @@ import Cart from './pages/Cart';
 import ProductCard from './Components/ProductCard';
 import Products from './pages/Products/Products';
 import Footer from './Components/Footer';
+import Checkout from './pages/Checkout';
+import ConfirmationPage from './pages/ConfirmationPage';
 
 function App() {
   const SignInRoute: React.FunctionComponent = () => {
@@ -97,6 +99,22 @@ function App() {
           element={
             <AppContainer>
               <Cart />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <AppContainer>
+              <Checkout />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/confirmation"
+          element={
+            <AppContainer>
+              <ConfirmationPage />
             </AppContainer>
           }
         />

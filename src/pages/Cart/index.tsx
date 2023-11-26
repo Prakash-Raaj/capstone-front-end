@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import OrderSummary from '../../Components/OrderSummary';
+
+interface CartItem {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+}
 
 const Cart = () => {
   const navigate = useNavigate();
+  
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    { id: 1, name: 'Product 1', quantity: 2, price: 100 },
+    { id: 2, name: 'Product 2', quantity: 1, price: 200 },
+    // Add more items as needed
+  ]);
+
+  const removeFromCart = (itemId: number) => {
+    const updatedCart = cartItems.filter(item => item.id !== itemId);
+    setCartItems(updatedCart);
+  };
+
   return (
     <div className="w-100 p-4">
       <div className="main-container w-100">
@@ -20,22 +40,30 @@ const Cart = () => {
               <h3>Total</h3>
             </div>
           </div>
-          <div className="items-container"></div>
-          <button className="cnt-btn"  onClick={() => {
-              navigate('/products');
-            }}>
-            <HiOutlineArrowNarrowLeft className="icon" /> Continue
-            Shopping
+          <div className="items-container">
+            {cartItems.map(item => (
+              <div key={item.id} className="cart-item">
+                <div className="left-heading">
+                  <p>{item.name}</p>
+                </div>
+                <div className="right-heading">
+                  <p>{item.quantity}</p>
+                  <p>${item.price}</p>
+                  <p>${item.quantity * item.price}</p>
+                  <button className="bg-orange-500 text-white px-2 py-1 rounded cursor-pointer" onClick={() => removeFromCart(item.id)}>Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button className="cnt-btn" onClick={() => navigate('/products')}>
+            <HiOutlineArrowNarrowLeft className="icon" /> Continue Shopping
           </button>
         </div>
         <div className="right-container">
           <h2>Order Summary</h2>
           <div className="divider"></div>
           <div className="headings">
-            <h3>
-              items <span>3</span>
-            </h3>
-            <h3>$567</h3>
+            <h3><OrderSummary cartItems={cartItems} /></h3>
           </div>
           <div className="shipping-container">
             <h3>shipping</h3>
@@ -53,17 +81,7 @@ const Cart = () => {
             <button className="apply-btn">apply</button>
             <div className="divider"></div>
           </div>
-          <div className="headings">
-            <h3>total cost</h3>
-            <h3>$577</h3>
-          </div>
-
-          <button
-            className="checkout-btn"
-           
-          >
-            checkout
-          </button>
+          <button className="checkout-btn" onClick={() => navigate('/checkout')}>checkout</button>
         </div>
       </div>
     </div>

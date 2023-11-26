@@ -1,7 +1,6 @@
 import categoryMen from '../assets/images/category-men.png';
 import categoryWomen from '../assets/images/category-women.png';
 import categoryKid from '../assets/images/category-kid.jpeg';
-import heroPoster from '../assets/images/hero-img2.png';
 import PSherwani from '../assets/images/products/Sherwani.jpeg';
 import Dothi from '../assets/images/products/Dothi&Pancha.jpeg';
 import KanchivaramSaree from '../assets/images/products/image-login.jpg';

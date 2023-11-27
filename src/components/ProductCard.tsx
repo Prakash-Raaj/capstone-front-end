@@ -1,32 +1,99 @@
-import React, { useState } from 'react';
-import { BsHeart } from 'react-icons/bs';
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+
+import { BsHeart } from "react-icons/bs";
+import { RiHeart3Fill } from "react-icons/ri";
+import { Product } from "../pages/Products/Model";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAppContainerState } from "../pages/AppContainer/slice/selector";
+import { useAppContainerSlice } from "../pages/AppContainer/slice";
 
 export interface ProductCardProps {
-  productTitle: string;
-  productDesc: string;
-  productImg: string;
-  productPrice: number;
+  product: Product;
 }
 
 const ProductCard = (props: ProductCardProps) => {
-  const [wishlisted, setWishlisted] = useState();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const disptach = useDispatch();
+  const { appContainerActions } = useAppContainerSlice();
+  const appContainerStates = useSelector(selectAppContainerState);
+  const { wishList } = appContainerStates;
+  const [isWishlistItem, setIsWishlistItem] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsWishlistItem(
+      wishList
+        .map((wishlist: any) => wishlist.productId)
+        .includes(props.product.id)
+    );
+  }, [wishList]);
+  const handleWishlist = async () => {
+    const userId = cookies.user_id;
+    if (!userId) {
+      navigate("/login");
+    } else {
+      const isProductInWishlist = wishList.filter(
+        (wish: any) => wish.productId === props.product.id
+      )[0];
+      const newWishlist = {
+        userId: userId,
+        productId: props.product.id,
+      };
+
+      if (!isProductInWishlist) {
+        disptach(appContainerActions.createWishlist(newWishlist));
+      } else {
+        disptach(
+          appContainerActions.removeWishList({
+            userId: userId,
+            wishlistId: isProductInWishlist.id,
+          })
+        );
+      }
+    }
+  };
+
+  const handleCart = async () => {
+    const userId = cookies.user_id;
+    if (!userId) {
+      navigate("/login");
+    } else {
+      // const
+    }
+  };
+
   return (
     <div className="w-80 h-[580px] mt-10  p-3 rounded-lg bg-[#f4f6f4] flex flex-col items-center gap-2 cursor-pointer">
       <img
-        src={props.productImg}
+        src={props.product.images[0]}
         alt="product"
         className="h-[420px] object-cover"
+        onClick={() => {
+          navigate(`/product/${props.product.id}`);
+        }}
       />
       <div className="w-[100%]">
-        <p className="text-lg">{props.productTitle}</p>
+        <p className="text-lg">{props.product.title}</p>
         <p className="italic text-sm text-slate-600">
-          {props.productDesc}
+          {props.product.description}
         </p>
-        <p>${props.productPrice}</p>
+        <p>$ {props.product.variants[0].price} </p>
         <div className="flex align-middle justify-between">
-          <button onClick={() => {}}>
-            <BsHeart />
-          </button>
+          <div
+            onClick={() => {
+              handleWishlist();
+            }}
+          >
+            <button>
+              {isWishlistItem ? (
+                <RiHeart3Fill className="text-red-700" />
+              ) : (
+                <BsHeart />
+              )}
+            </button>
+          </div>
           <button className="bg-[#228706] p-2 rounded-md text-white">
             Add to Cart
           </button>

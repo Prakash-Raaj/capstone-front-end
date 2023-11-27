@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Items from './Items';
+import { useLabels } from '@headlessui/react/dist/components/label/label';
 
-const Cart = () => {
+const BuyNow = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [subTotal, setSubTotal] = useState<number>();
   const [total, setTotal] = useState<number>();
   useEffect(() => {
-    // console.log(location.state);
-    // setSubTotal(location.state.quantity * location.state.price);
-    // get cart products from DB and populate it here
+    console.log(location.state);
+    setSubTotal(location.state.quantity * location.state.price);
   }, []);
 
   const handleShipping = (e: any) => {
@@ -42,12 +42,12 @@ const Cart = () => {
             </div> */}
           </div>
           <div className="items-container p-6">
-            {/* <Items
+            <Items
               product={location.state.product}
               price={location.state.price}
               quantity={location.state.quantity}
               size={location.state.size}
-            /> */}
+            />
           </div>
           <button
             className="cnt-btn"
@@ -106,4 +106,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default BuyNow;

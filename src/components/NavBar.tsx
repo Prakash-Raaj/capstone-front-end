@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { Fragment } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, Transition } from "@headlessui/react";
 
-import logo from '../assets/images/Logo.svg';
+import logo from "../assets/images/Logo.svg";
 import {
   BiLogIn,
   BiLogOut,
@@ -12,7 +12,7 @@ import {
   BiCart,
   BiSolidChevronDown,
   BiShoppingBag,
-} from 'react-icons/bi';
+} from "react-icons/bi";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -25,14 +25,10 @@ const NavBar = () => {
         alt="Logo"
         className="w-36 cursor-pointer"
         onClick={() => {
-          navigate('/');
+          navigate("/");
         }}
       />
       <div className="flex gap-8">
-        {/* <div className="flex items-center gap-1">
-          <p>Categories</p>
-          <BiSolidChevronDown />
-        </div> */}
         <div>
           <Menu as="div" className="relative inline-block text-left">
             <div>
@@ -56,12 +52,10 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                         onClick={() => {
-                          navigate('/products/1');
+                          navigate("/products/Men");
                         }}
                       >
                         {/* <BiUser />
@@ -74,16 +68,12 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                         onClick={() => {
-                          navigate('/products/2');
+                          navigate("/products/Women");
                         }}
                       >
-                        {/* <BiLogOut />
-                        Log out */}
                         Women
                       </button>
                     )}
@@ -92,16 +82,12 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                         onClick={() => {
-                          navigate('/products/3');
+                          navigate("/products/Kids");
                         }}
                       >
-                        {/* <BiLogOut />
-                        Log out */}
                         Kids
                       </button>
                     )}
@@ -111,8 +97,22 @@ const NavBar = () => {
             </Transition>
           </Menu>
         </div>
-        <p>Deals</p>
-        <p>What's New</p>
+        <p
+          className="cursor-pointer"
+          onClick={() => {
+            navigate("products");
+          }}
+        >
+          Deals
+        </p>
+        <p
+          className="cursor-pointer"
+          onClick={() => {
+            navigate("products");
+          }}
+        >
+          What's New
+        </p>
       </div>
       <div className="relative ">
         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -169,9 +169,7 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                       >
                         <BiUser />
@@ -183,12 +181,10 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                         onClick={() => {
-                          removeCookie('token');
+                          removeCookie("token");
                         }}
                       >
                         <BiLogOut />
@@ -204,7 +200,7 @@ const NavBar = () => {
           <div
             className="flex w-full items-center gap-2 cursor-pointer"
             onClick={() => {
-              navigate('/login');
+              navigate("/login");
             }}
           >
             <BiLogIn />
@@ -235,14 +231,10 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                         onClick={() => {
-                          token
-                            ? navigate('/wishlist')
-                            : navigate('/login');
+                          token ? navigate("/wishlist") : navigate("/login");
                         }}
                       >
                         <BiShoppingBag />
@@ -254,14 +246,10 @@ const NavBar = () => {
                     {({ active }) => (
                       <button
                         className={`${
-                          active
-                            ? 'bg-[#228706] text-white'
-                            : 'text-gray-900'
+                          active ? "bg-[#228706] text-white" : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-2`}
                         onClick={() => {
-                          token
-                            ? navigate('/cart')
-                            : navigate('/login');
+                          token ? navigate("/cart") : navigate("/login");
                         }}
                       >
                         <BiCart />

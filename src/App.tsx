@@ -22,6 +22,8 @@ import Test from './pages/Products/Test';
 import BuyNow from './pages/Cart/BuyNow';
 import Checkout from './pages/Checkout';
 import ConfirmationPage from './pages/ConfirmationPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const MainRoute: React.FunctionComponent = () => {
@@ -147,6 +149,7 @@ function App() {
       <div className="pt-9 bottom-0 left-0 right-0">
         <Footer />
       </div>
+      <ToastContainer />
     </div>
   );
 }

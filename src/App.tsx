@@ -22,6 +22,7 @@ import Test from './pages/Products/Test';
 import BuyNow from './pages/Cart/BuyNow';
 import Checkout from './pages/Checkout';
 import ConfirmationPage from './pages/ConfirmationPage';
+import ProfilePage from './pages/Profile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -110,6 +111,14 @@ function App() {
           element={
             <AppContainer>
               <ConfirmationPage />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <AppContainer>
+              <ProfilePage />
             </AppContainer>
           }
         />

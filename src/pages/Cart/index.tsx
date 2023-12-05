@@ -2,27 +2,58 @@ import React, { useEffect, useState } from 'react';
 import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Items from './Items';
+import { selectAppContainerState } from '../AppContainer/slice/selector';
+import { useSelector } from 'react-redux';
+import { useAppContainerSlice } from '../AppContainer/slice';
 
 const Cart = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [subTotal, setSubTotal] = useState<number>();
   const [total, setTotal] = useState<number>();
+  const [delivery, setDelivery] = useState('');
+  const [qty, setQty] = useState(0);
+
+  const { appContainerActions } = useAppContainerSlice();
+  const appContainerStates = useSelector(selectAppContainerState);
+  const { cart, productList } = appContainerStates;
+
   useEffect(() => {
-    // console.log(location.state);
-    // setSubTotal(location.state.quantity * location.state.price);
-    // get cart products from DB and populate it here
+    calcultePrice();
   }, []);
+  useEffect(() => {
+    calcultePrice();
+  }, [cart]);
+
+  function calcultePrice() {
+    let totalPrice: number = 0;
+    let qty = 0;
+    cart.forEach((cartItem) => {
+      // Find the corresponding product based on productId
+      const product = productList.find(
+        (p) => p.id === cartItem.productId
+      );
+      if (product) {
+        totalPrice += cartItem.quantity * product.variants[0].price;
+        qty += cartItem.quantity;
+      }
+    });
+    setSubTotal(totalPrice);
+    setQty(qty);
+  }
 
   const handleShipping = (e: any) => {
     const shipping = e.target.value;
     console.log(shipping);
     if (shipping === 'standard') {
       subTotal && setTotal(5 + subTotal);
+      setDelivery('standard');
     } else if (shipping === 'express') {
       subTotal && setTotal(10 + subTotal);
+      setDelivery('express');
     } else {
       subTotal && setTotal(20 + subTotal);
+      setDelivery('overnight');
     }
   };
   return (
@@ -41,13 +72,20 @@ const Cart = () => {
               <h3>Total</h3>
             </div> */}
           </div>
-          <div className="items-container p-6">
-            {/* <Items
-              product={location.state.product}
-              price={location.state.price}
-              quantity={location.state.quantity}
-              size={location.state.size}
-            /> */}
+          <div className="items-container p-6 ">
+            {cart.map((item: any) => (
+              <Items
+                cartId={item.id}
+                productId={item.productId}
+                quantity={item.quantity}
+                key={item.id}
+              />
+            ))}
+            {cart.length === 0 && (
+              <h2 className="text-center">
+                Please add items to Cart
+              </h2>
+            )}
           </div>
           <button
             className="cnt-btn"
@@ -96,7 +134,15 @@ const Cart = () => {
           </div>
           <button
             className="checkout-btn"
-            onClick={() => navigate('/checkout')}
+            onClick={() =>
+              navigate('/checkout', {
+                state: {
+                  price: total,
+                  delivery: delivery,
+                  quantity: qty,
+                },
+              })
+            }
           >
             checkout
           </button>

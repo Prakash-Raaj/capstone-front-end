@@ -22,9 +22,11 @@ import Test from './pages/Products/Test';
 import BuyNow from './pages/Cart/BuyNow';
 import Checkout from './pages/Checkout';
 import ConfirmationPage from './pages/ConfirmationPage';
-import ProfilePage from './pages/Profile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProfilePage from './pages/Profile';
+import AdminNav from './components/AdminNav';
+import Orders from './pages/Orders';
 
 function App() {
   const MainRoute: React.FunctionComponent = () => {
@@ -118,7 +120,9 @@ function App() {
           path="/profile"
           element={
             <AppContainer>
-              <ProfilePage />
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
             </AppContainer>
           }
         />
@@ -127,6 +131,24 @@ function App() {
           element={
             <AppContainer>
               <ProductPage />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/adminNav"
+          element={
+            <AppContainer>
+              <AdminNav />
+            </AppContainer>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <AppContainer>
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
             </AppContainer>
           }
         />

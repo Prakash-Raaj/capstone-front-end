@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import OrderSummary from '../../components/OrderSummary';
 import {
   PayPalScriptProvider,
   PayPalButtons,
 } from '@paypal/react-paypal-js';
+import { useCookies } from 'react-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAppContainerSlice } from '../AppContainer/slice';
+import { selectAppContainerState } from '../AppContainer/slice/selector';
 
 interface FormValues {
   firstName: string;
-  lastName: string;
   email: string;
   address: string;
   deliveryDate: string;
 }
 
-interface CartItem {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
-}
+// interface CartItem {
+//   id: number;
+//   name: string;
+//   quantity: number;
+//   price: number;
+// }
 
 // Define a type for the 'link' object
 interface PayPalLink {
@@ -30,29 +33,66 @@ interface PayPalLink {
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  const [totalAmount, setTotalAmount] = useState(
+    location.state.price.toFixed(2)
+  );
+  const [cartItems] = useState({
+    quantity: location.state.quantity,
+    price: totalAmount,
+  });
+
+  const disptach = useDispatch();
+  const { appContainerActions } = useAppContainerSlice();
+
+  const appContainerStates = useSelector(selectAppContainerState);
+
+  const { cart, address } = appContainerStates;
 
   const calculateDeliveryDate = () => {
     const today = new Date();
-    const deliveryDate = new Date(today.setDate(today.getDate() + 4));
+    var deliveryDate;
+    if (location.state.delivery == 'standard') {
+      deliveryDate = new Date(today.setDate(today.getDate() + 5));
+    } else if (location.state.delivery == 'express') {
+      deliveryDate = new Date(today.setDate(today.getDate() + 3));
+    } else {
+      deliveryDate = new Date(today.setDate(today.getDate() + 1));
+    }
     return deliveryDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   };
 
-  const [cartItems] = useState<CartItem[]>([
-    { id: 1, name: 'Product 1', quantity: 2, price: 100 },
-    { id: 2, name: 'Product 2', quantity: 1, price: 200 },
-    // Add more items as needed
-  ]);
+  useEffect(() => {
+    disptach(appContainerActions.getAddress(cookies.user_id));
+    console.log('location state', location.state);
+    console.log('---->', address);
+  }, []);
 
-  const totalAmount = cartItems.reduce(
-    (total, item) => total + item.quantity * item.price,
-    0
-  );
+  useEffect(() => {
+    setFormData({
+      firstName: cookies.username,
+      email: cookies.email,
+      address: `${address[0]?.street},
+      ${address[0]?.city},
+      ${address[0]?.state},
+      ${address[0]?.country},
+      ${address[0]?.postalCode}
+    `,
+      deliveryDate: calculateDeliveryDate(),
+    });
+  }, [address]);
 
   const [formData, setFormData] = useState<FormValues>(() => ({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    address: '123 Main St, Cityville, USA',
+    firstName: cookies.username,
+    email: cookies.email,
+    address: `${address[0]?.street},
+      ${address[0]?.city},
+      ${address[0]?.state},
+      ${address[0]?.country},
+      ${address[0]?.postalCode}
+    `,
     deliveryDate: calculateDeliveryDate(),
   }));
 
@@ -176,8 +216,8 @@ const Checkout = () => {
             <h2>Shipping Information</h2>
             <div className="divider"></div>
             <form>
-              <div className="form-group">
-                <label htmlFor="firstName">First Name:</label>
+              {/* <div className="form-group">
+                <label htmlFor="firstName">Name:</label>
                 <input
                   type="text"
                   id="firstName"
@@ -187,8 +227,27 @@ const Checkout = () => {
                     handleInputChange('firstName', e.target.value)
                   }
                 />
+              </div> */}
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.firstName}
+                  onChange={(e) =>
+                    handleInputChange('firstName', e.target.value)
+                  }
+                  className="mt-1 p-2 w-full border rounded-md"
+                  required
+                />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="lastName">Last Name:</label>
                 <input
                   type="text"
@@ -199,8 +258,8 @@ const Checkout = () => {
                     handleInputChange('lastName', e.target.value)
                   }
                 />
-              </div>
-              <div className="form-group">
+              </div> */}
+              {/* <div className="form-group">
                 <label htmlFor="email">Email:</label>
                 <input
                   type="email"
@@ -211,18 +270,58 @@ const Checkout = () => {
                     handleInputChange('email', e.target.value)
                   }
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="address">Address:</label>
+              </div> */}
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Email
+                </label>
                 <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    handleInputChange('email', e.target.value)
+                  }
+                  className="mt-1 p-2 w-full border rounded-md"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Address
+                </label>
+                <textarea
                   id="address"
                   name="address"
                   value={formData.address}
                   onChange={(e) =>
                     handleInputChange('address', e.target.value)
                   }
-                ></input>
+                  rows={3}
+                  className="mt-1 p-2 w-full border rounded-md"
+                  required
+                ></textarea>
               </div>
+              {/* <div className="form-group my-3">
+                <label htmlFor="address">Address:</label>
+                <textarea
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  cols={15}
+                  rows={6}
+                  onChange={(e) =>
+                    handleInputChange('address', e.target.value)
+                  }
+                ></textarea>
+              </div> */}
               <div className="form-group">
                 <h3>
                   Estimated Delivery Date: {formData.deliveryDate}

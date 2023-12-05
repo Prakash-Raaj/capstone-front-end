@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-
-import { BsHeart } from "react-icons/bs";
-import { RiHeart3Fill } from "react-icons/ri";
-import { Product } from "../pages/Products/Model";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAppContainerState } from "../pages/AppContainer/slice/selector";
-import { useAppContainerSlice } from "../pages/AppContainer/slice";
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { BsHeart } from 'react-icons/bs';
+import { RiHeart3Fill } from 'react-icons/ri';
+import { Product } from '../pages/Products/Model';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAppContainerState } from '../pages/AppContainer/slice/selector';
+import { useAppContainerSlice } from '../pages/AppContainer/slice';
 
 export interface ProductCardProps {
   product: Product;
@@ -18,8 +17,10 @@ const ProductCard = (props: ProductCardProps) => {
   const disptach = useDispatch();
   const { appContainerActions } = useAppContainerSlice();
   const appContainerStates = useSelector(selectAppContainerState);
-  const { wishList } = appContainerStates;
-  const [isWishlistItem, setIsWishlistItem] = useState<boolean>(false);
+  const { wishList, cart } = appContainerStates;
+  const [isWishlistItem, setIsWishlistItem] =
+    useState<boolean>(false);
+  const [isCartItem, setCartItem] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,11 +29,17 @@ const ProductCard = (props: ProductCardProps) => {
         .map((wishlist: any) => wishlist.productId)
         .includes(props.product.id)
     );
-  }, [wishList]);
+    setCartItem(
+      cart
+        .map((cartItem: any) => cartItem.productId)
+        .includes(props.product.id)
+    );
+  }, [wishList, cart]);
+
   const handleWishlist = async () => {
     const userId = cookies.user_id;
     if (!userId) {
-      navigate("/login");
+      navigate('/login');
     } else {
       const isProductInWishlist = wishList.filter(
         (wish: any) => wish.productId === props.product.id
@@ -58,16 +65,31 @@ const ProductCard = (props: ProductCardProps) => {
   const handleCart = async () => {
     const userId = cookies.user_id;
     if (!userId) {
-      navigate("/login");
+      navigate('/login');
     } else {
-      // const
+      if (!isCartItem) {
+        const newCart = {
+          userId: userId,
+          productId: props.product.id,
+        };
+        disptach(appContainerActions.createCartItem(newCart));
+      } else {
+        const isProductInCart = cart.filter(
+          (cart: any) => cart.productId === props.product.id
+        )[0];
+        disptach(
+          appContainerActions.removeCartItem({
+            userId: userId,
+            cartId: isProductInCart.id,
+          })
+        );
+      }
     }
   };
-
   return (
     <div className="w-80 h-[580px] mt-10  p-3 rounded-lg bg-[#f4f6f4] flex flex-col items-center gap-2 cursor-pointer">
       <img
-        src={props.product.images[0]}
+        src={require(`../assets/images/${props.product.images[0]}`)}
         alt="product"
         className="h-[420px] object-cover"
         onClick={() => {
@@ -80,7 +102,7 @@ const ProductCard = (props: ProductCardProps) => {
           {props.product.description}
         </p>
         <p>$ {props.product.variants[0].price} </p>
-        <div className="flex align-middle justify-between">
+        <div className="flex align-middle justify-between items-center">
           <div
             onClick={() => {
               handleWishlist();
@@ -94,8 +116,13 @@ const ProductCard = (props: ProductCardProps) => {
               )}
             </button>
           </div>
-          <button className="bg-[#228706] p-2 rounded-md text-white">
-            Add to Cart
+          <button
+            className="bg-[#228706] p-2 rounded-md text-white"
+            onClick={() => {
+              handleCart();
+            }}
+          >
+            {isCartItem ? 'Remove from Cart' : 'Add To Cart'}
           </button>
         </div>
       </div>

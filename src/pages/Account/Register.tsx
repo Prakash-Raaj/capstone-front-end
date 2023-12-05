@@ -1,40 +1,48 @@
-import React, { useState } from "react";
-import { registerUser } from "../../utils/helpers";
-import InputTextComponent from "../../components/InputTextComponent";
-import PasswordTextComponent from "../../components/PasswordTextComponent";
-import loginImage from "../../assets/images/image-login.jpg";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from 'react';
+import { registerUser } from '../../utils/helpers';
+import InputTextComponent from '../../components/InputTextComponent';
+import PasswordTextComponent from '../../components/PasswordTextComponent';
+import loginImage from '../../assets/images/image-login.jpg';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
-  const [userName, setUserName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [role, setRole] = useState("user");
+  const [userName, setUserName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [role, setRole] = useState('user');
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     toast.dismiss(); // Dismiss any existing toasts
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
       return;
     } else {
       try {
         if (!email || !password || !userName || !role) {
-          toast.error("All fields are required");
+          toast.error('All fields are required');
           return;
         }
 
-        const response = await registerUser(email, password, userName, role);
-        console.log("registered user", response);
-        toast.success("User registered successfully");
-        navigate("/login");
+        const response = await registerUser(
+          email,
+          password,
+          userName,
+          role
+        );
+        console.log('registered user', response);
+        toast.success('User registered successfully');
+        navigate('/login');
       } catch (error: any) {
-        console.error("An error occurred during registration:", error.message);
-        toast.error("An error occurred during registration");
+        console.error(
+          'An error occurred during registration:',
+          error.message
+        );
+        toast.error('An error occurred during registration');
       }
     }
   };
@@ -52,12 +60,12 @@ const Register = () => {
         <h1 className="text-3xl text-center">Register</h1>
         <h6>Please enter your username and password</h6>
         <InputTextComponent
-          value={email}
+          value={userName}
           label="Username"
           setValue={setEmail}
         />
         <InputTextComponent
-          value={userName}
+          value={email}
           label="Email"
           placeHolder="you@example.com"
           setValue={setUserName}

@@ -63,7 +63,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
       /> */}
       {product != undefined && (
         <img
-          src={require(`../assets/images/${product.images[0]}`)}
+          src={require(`../assets/images/products/${product.images[0]}`)}
           alt="product"
           className="h-[420px] object-cover"
         />

@@ -46,7 +46,8 @@ const Cart = () => {
       }
     });
     setSubTotal(totalPrice);
-    // subTotal && setTotal(subTotal + 5);
+    
+    totalPrice!==0 && setTotal(totalPrice + 5);
     setQty(qty);
   }
 
@@ -110,7 +111,7 @@ const Cart = () => {
           <div className="divider"></div>
           <div className="headings">
             <h3>items Cost</h3>
-            <h3>${subTotal}</h3>
+            <h3>${subTotal?.toFixed(2)}</h3>
           </div>
           <div className="shipping-container">
             <h3>shipping</h3>
@@ -149,7 +150,6 @@ const Cart = () => {
                   const code = promoCodes.filter(
                     (p) => p.code === promoCode.toLowerCase()
                   );
-                  console.log('check for unfilt', code);
                   if (
                     code.length !== 0 &&
                     code[0].code === promoCode.toLowerCase()
@@ -200,6 +200,7 @@ const Cart = () => {
                   price: promoApplied ? discountedTotal : total,
                   delivery: delivery,
                   quantity: qty,
+                  promoCode:promoCode
                 },
               })
             }

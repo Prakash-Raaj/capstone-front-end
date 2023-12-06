@@ -207,9 +207,18 @@ const Checkout = () => {
   const onApprove = async (data: any, actions: any) => {
     // Capture the funds from the transaction
     await actions.order.capture();
-
+    // setCookie('delivery', location.state.delivery);
+    // setCookie('totalAmount', location.state.price);
+    // setCookie('promo', location.state.promoCode);
     // Redirect to a confirmation page or handle success as needed
-    navigate('/confirmation');
+    navigate('/confirmation', {
+      state: {
+        price: location.state.price,
+        delivery: location.state.delivery,
+        quantity: location.state.quantity,
+        promoCode: location.state.promoCode,
+      },
+    });
   };
 
   const onError = (err: any) => {

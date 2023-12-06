@@ -71,17 +71,26 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    setFormData({
-      firstName: cookies.username,
-      email: cookies.email,
-      address: `${address[0]?.street},
-      ${address[0]?.city},
-      ${address[0]?.state},
-      ${address[0]?.country},
-      ${address[0]?.postalCode}
-    `,
-      deliveryDate: calculateDeliveryDate(),
-    });
+    if (address.length > 0) {
+      setFormData({
+        firstName: cookies.username,
+        email: cookies.email,
+        address: `${address[0]?.street},
+        ${address[0]?.city},
+        ${address[0]?.state},
+        ${address[0]?.country},
+        ${address[0]?.postalCode}
+      `,
+        deliveryDate: calculateDeliveryDate(),
+      });
+    } else {
+      setFormData({
+        firstName: cookies.username,
+        email: cookies.email,
+        address: '',
+        deliveryDate: calculateDeliveryDate(),
+      });
+    }
   }, [address]);
 
   const [formData, setFormData] = useState<FormValues>(() => ({

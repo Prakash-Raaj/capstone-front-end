@@ -14,6 +14,7 @@ const Cart = () => {
   const location = useLocation();
   const [subTotal, setSubTotal] = useState<number>();
   const [total, setTotal] = useState<number>();
+  const [discountedTotal, setDiscountedTotal] = useState<number>();
   const [delivery, setDelivery] = useState('');
   const [promoCode, setPromoCode] = useState('');
   const [promoApplied, setPromoApplied] = useState(false);
@@ -155,7 +156,7 @@ const Cart = () => {
                   ) {
                     setPromoApplied(true);
                     total !== undefined &&
-                      setTotal(total * code[0].discount);
+                      setDiscountedTotal(total * code[0].discount);
                     setPercent(code[0].percent);
                     toast.success('Promo code applied successful!');
                   } else {
@@ -181,7 +182,7 @@ const Cart = () => {
           <div className="headings">
             <h3>Total cost</h3>
             <div className="flex gap-1">
-              {promoApplied && <p>${total?.toFixed(2)}</p>}
+              {promoApplied && <p>${discountedTotal?.toFixed(2)}</p>}
               <p
                 className={
                   promoApplied ? 'line-through' : 'no-underline'
@@ -196,7 +197,7 @@ const Cart = () => {
             onClick={() =>
               navigate('/checkout', {
                 state: {
-                  price: total,
+                  price: promoApplied ? discountedTotal : total,
                   delivery: delivery,
                   quantity: qty,
                 },

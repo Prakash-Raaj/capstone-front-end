@@ -87,7 +87,7 @@ const ProductCard = (props: ProductCardProps) => {
     }
   };
   return (
-    <div className="w-80 h-[580px] mt-10  p-3 rounded-lg bg-[#f4f6f4] flex flex-col items-center gap-2 cursor-pointer">
+    <div className="w-80 h-[fit] mt-10  p-3 rounded-lg bg-[#f4f6f4] flex flex-col items-center gap-2 cursor-pointer">
       <img
         src={require(`../assets/images/products/${props.product.images[0]}`)}
         alt="product"

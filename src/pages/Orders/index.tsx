@@ -49,7 +49,7 @@ const Orders = () => {
       <div className="flex justify-between items-center mb-6 w-[75]">
         <div>
           <h1 className="text-2xl font-semibold">
-            Order ID: {orders[0].id.substring(0, 7)}
+            Order ID: {orders[0]?.id.substring(0, 7)}
           </h1>
           <p className="text-gray-600">
             Order date:{' '}
@@ -149,18 +149,20 @@ const Orders = () => {
             </div>
             <div className="flex justify-between font-semibold">
               <span className="font-light">Delivery:</span>
-              <span>{orders[0].deliveryType}</span>
+              <span>{orders[0]?.deliveryType}</span>
             </div>
-            {orders[0].promoCode !== '' && (
+            {orders[0]?.promoCode !== '' && (
               <div className="flex justify-between font-semibold">
                 <span className="font-light">Promo:</span>
-                <span className='font-light'>{orders[0].promoCode.toUpperCase()}</span>
+                <span className="font-light">
+                  {orders[0]?.promoCode.toUpperCase()}
+                </span>
               </div>
             )}
             <hr />
             <div className="flex justify-between font-semibold mt-2">
               <span className="font-light">Total:</span>
-              <span>${orders[0].totalAmount}</span>
+              <span>${orders[0]?.totalAmount}</span>
             </div>
           </div>
         </div>

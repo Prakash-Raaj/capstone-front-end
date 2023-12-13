@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Menu, Transition } from '@headlessui/react';
 
-import logo from '../assets/images/Logo.svg';
+import logo from '../assets/images/Traditionalthreadslogo.jpg';
 import {
   BiLogIn,
   BiLogOut,
@@ -45,7 +45,7 @@ const NavBar = () => {
         products: results,
       },
     });
-    
+
     setSearchValue('');
     setFilteredProducts(results);
   }

@@ -1,29 +1,29 @@
-import { Fragment } from "react";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { Fragment } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Transition } from '@headlessui/react';
 
-import logo from "../assets/images/Logo.svg";
+import logo from '../assets/images/Traditionalthreadslogo.jpg';
 import {
   BiLogIn,
   BiLogOut,
   BiUser,
   BiCart,
   BiSolidChevronDown,
-} from "react-icons/bi";
+} from 'react-icons/bi';
 
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu } from 'react-icons/gi';
 
-import { MdAccountBox } from "react-icons/md";
+import { MdAccountBox } from 'react-icons/md';
 
-import { VscGraph } from "react-icons/vsc";
+import { VscGraph } from 'react-icons/vsc';
 
-import { RiExchangeDollarLine } from "react-icons/ri";
+import { RiExchangeDollarLine } from 'react-icons/ri';
 
-import { LiaUsersSolid } from "react-icons/lia";
+import { LiaUsersSolid } from 'react-icons/lia';
 
-import { MdToday } from "react-icons/md";
+import { MdToday } from 'react-icons/md';
 
 const AdminNav = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const AdminNav = () => {
             alt="Logo"
             className="w-40 cursor-pointer mt-[-10px]"
             onClick={() => {
-              navigate("/");
+              navigate('/');
             }}
           />
         </div>
@@ -98,8 +98,12 @@ const AdminNav = () => {
           </div>
           <div className="bg-[white] w-[250px] h-[200px] rounded-lg pl-[1rem] flex flex-col justify-center">
             <RiExchangeDollarLine className="w-[70px] h-[70px]" />
-            <h2 className="text-[1.75rem] font-bold">Total Revenue</h2>
-            <h2 className="text-[1.75rem] font-semibold">$216,871.76</h2>
+            <h2 className="text-[1.75rem] font-bold">
+              Total Revenue
+            </h2>
+            <h2 className="text-[1.75rem] font-semibold">
+              $216,871.76
+            </h2>
           </div>
           <div className="bg-[white] w-[250px] h-[200px] rounded-lg pl-[1rem] flex flex-col justify-center">
             <LiaUsersSolid className="w-[70px] h-[70px]" />
@@ -114,7 +118,9 @@ const AdminNav = () => {
         </div>
       </div>
       <div className=" w-3/4 h-screen bg-[white] mx-auto mt-[10rem] rounded-lg">
-        <h2 className="text-[1.75rem] font-bold p-[1rem]">Active Products</h2>
+        <h2 className="text-[1.75rem] font-bold p-[1rem]">
+          Active Products
+        </h2>
         <div className="w-4/4 bg-[#eaeaea] text-[1.25rem] font-semibold">
           <div className="flex w-3/4 m-auto justify-between">
             <h3>Product Name</h3>
